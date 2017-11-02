@@ -15,11 +15,11 @@
         }
     ],
     "homepage": "https://github.com/blasher/laratest",
-    "require": {}
+    "require": {},
     "autoload": {
 	"psr-4": {
 	    "blasher\\laratest\\": "src/"
 	}
-    },
+    }
 }
 
