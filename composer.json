@@ -1,0 +1,13 @@
+{
+    "name": "blasher/laratest",
+    "description": "Generic Test Suite for Laravel",
+    "type": "laravel-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brian Lasher",
+            "email": "me@brianlasher.com"
+        }
+    ],
+    "require": {}
+}
