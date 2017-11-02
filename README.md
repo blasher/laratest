@@ -9,20 +9,20 @@ This is meant to be a generic test suite for laravel.  It is meant to give a lit
 
 ```
 composer install --dev blasher/laratest
+
 cp -fr vendor/blasher/laratest/src/tests/ApiAuthTestInterface.php tests/.
 cp -fr vendor/blasher/laratest/src/tests/ApiAuthenticatable.php tests/.
 cp -fr vendor/blasher/laratest/src/tests/ApiPassportAuthTest.php tests/.
 cp -fr vendor/blasher/laratest/src/tests/ApiTokenAuthTest.php tests/.
-
 ```
 
 
 ## To do
 
--fix authenticated tests (for both token and passport)
--add code so that these files get added to laravel test suite automatically or thru artisan command
--add passport usage test
--modify passport authentication 
+  * fix authenticated tests (for both token and passport)
+  * add code so that these files get added to laravel test suite automatically or thru artisan command
+  * add passport usage test
+  * modify passport authentication 
 
 
 ## License
