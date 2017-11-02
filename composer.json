@@ -20,7 +20,7 @@
 	"psr-4": {
 	    "blasher\\laratest\\": "src/"
 	}
-    }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
