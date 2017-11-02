@@ -1,7 +1,7 @@
 {
     "name": "blasher/laratest",
     "description": "Generic Test Suite for Laravel",
-    "type": "laravel-plugin",
+    "type": "library",
     "keywords": ["laravel","test","api"],
     "license": "MIT",
     "support": {
