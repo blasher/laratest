@@ -2,12 +2,24 @@
     "name": "blasher/laratest",
     "description": "Generic Test Suite for Laravel",
     "type": "laravel-plugin",
+    "keywords": ["laravel","test","api"],
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/blasher/laratest/issues",
+        "source": "https://github.com/blasher/laratest"
+    },
     "authors": [
         {
             "name": "Brian Lasher",
             "email": "me@brianlasher.com"
         }
     ],
+    "homepage": "https://github.com/blasher/laratest",
     "require": {}
+    "autoload": {
+	"psr-4": {
+	    "blasher\\laratest\\": "src/"
+	}
+    },
 }
+
