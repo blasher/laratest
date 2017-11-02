@@ -18,13 +18,13 @@ class LaratestServiceProvider extends ServiceProvider
             __DIR__.'/tests/API/ApiAuthenticatable.php'   => $this->test_path('ApiAuthenticatable.php'),
             __DIR__.'/tests/API/ApiAuthTestInterface.php' => $this->test_path('ApiAuthTestInterface.php'),
             __DIR__.'/tests/API/ApiTokenAuthTest.php'     => $this->test_path('ApiTokenAuthTest.php.php')
-        ], 'token');
+        ], 'laratest_token');
 
         $this->publishes([
             __DIR__.'/tests/API/ApiAuthenticatable.php'   => $this->test_path('ApiAuthenticatable.php'),
             __DIR__.'/tests/API/ApiAuthTestInterface.php' => $this->test_path('ApiAuthTestInterface.php'),
             __DIR__.'/tests/API/ApiPassportAuthTest.php'  => $this->test_path('ApiPassportAuthTest.php')
-        ], 'passport');
+        ], 'laratest_passport');
 
 
         parent::boot();
