@@ -12,6 +12,11 @@ composer install --dev blasher/laratest
 
 cp -fr vendor/blasher/laratest/src/tests/ApiAuthTestInterface.php tests/.
 cp -fr vendor/blasher/laratest/src/tests/ApiAuthenticatable.php tests/.
+```
+
+Then copy the appropriate file below:
+
+```
 cp -fr vendor/blasher/laratest/src/tests/ApiPassportAuthTest.php tests/.
 cp -fr vendor/blasher/laratest/src/tests/ApiTokenAuthTest.php tests/.
 ```
