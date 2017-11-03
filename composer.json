@@ -15,7 +15,9 @@
         }
     ],
     "homepage": "https://github.com/blasher/laratest",
-    "require": {},
+    "require": {
+	"illuminate/support": "~5.4"
+    },
     "autoload": {
 	"psr-4": {
 	    "Blasher\\Laratest\\": "src/"
