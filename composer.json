@@ -21,6 +21,13 @@
 	    "blasher\\laratest\\": "src/"
 	}
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Blasher\\Laratest\\LaratestServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
