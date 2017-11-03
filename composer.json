@@ -1,5 +1,5 @@
 {
-    "name": "blasher/laratest",
+    "name": "Blasher/Laratest",
     "description": "Generic Test Suite for Laravel",
     "type": "library",
     "keywords": ["laravel","test","api"],
