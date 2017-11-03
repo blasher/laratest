@@ -1,6 +1,6 @@
 <?php
 
-namespace Blasheer\Laratest\Tests\API;
+namespace Blasher\Laratest\Tests\API;
 
 use Blasher\Laratest\Tests\API\ApiAuthenticatable;
 use Tests\TestCase;
