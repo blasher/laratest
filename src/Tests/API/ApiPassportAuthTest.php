@@ -34,5 +34,36 @@ class ApiPassportAuthTest extends TestCase implements ApiAuthTestInterface
         
     ];
 
-   
+    /**
+     * Check for results when authenticated
+     *
+     * @param  Illuminate\Routing\Route $route
+     */
+    public function getsJsonForAuthenticatedRoute( $route )
+    {
+        $user = $this->createApiUser();
+        $route_uri = $route->uri().'?api_token='.$user->api_token;
+        
+        $response = $this->actingAs($user)
+                         ->get( $route->uri())
+                         ->assertStatus( Response::HTTP_OK )
+                         ->seeJson( [] );
+    }
+    
+    /**
+     * create authenticated api user
+     *
+     * @return User
+     */
+    public function createApiUser()
+    {
+        $this->user = factory(User::class)->create();
+        $this->user->save();
+
+        $user = User::findOrFail(1);
+        
+        $this->assertEquals($this->user->name(), $user->name() );
+
+        return $user;
+    }
 }
