@@ -16,7 +16,7 @@ class LaratestServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/Tests/API/ApiAuthenticatable.php'   => $this->tests_path('/API/ApiAuthenticatable.php'),
             __DIR__.'/Tests/API/ApiAuthTestInterface.php' => $this->tests_path('/API/ApiAuthTestInterface.php'),
-            __DIR__.'/Tests/API/ApiTokenAuthTest.php'     => $this->tests_path('/API/ApiTokenAuthTest.php.php')
+            __DIR__.'/Tests/API/ApiTokenAuthTest.php'     => $this->tests_path('/API/ApiTokenAuthTest.php')
         ], 'laratest_token');
 
         $this->publishes([
