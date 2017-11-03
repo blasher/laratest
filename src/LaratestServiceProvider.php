@@ -25,8 +25,7 @@ class LaratestServiceProvider extends ServiceProvider
             __DIR__.'/tests/API/ApiPassportAuthTest.php'  => $this->test_path('/API/ApiPassportAuthTest.php')
         ], 'laratest_passport');
 
-
-        parent::boot();
+       //        parent::boot();
     }
 
     /**
