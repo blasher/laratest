@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Blasher\Laratest;
 
 use Illuminate\Support\ServiceProvider;
 
