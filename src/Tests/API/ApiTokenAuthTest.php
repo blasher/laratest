@@ -2,7 +2,8 @@
 
 namespace Blasher\Laratest\Tests\API;
 
-use Blasher\Laratest\Tests\API\ApiAuthenticatable;
+use Blasher\Laratest\ApiAuthenticatable;
+use Blasher\Laratest\ApiAuthTestInterface as ApiAuthTestInterface;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response as Response;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Blasher\Laratest\Tests\API;
+namespace Blasher\Laratest;
 
 use App\Factory;
 use App\User;
