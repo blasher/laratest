@@ -23,23 +23,6 @@ class ApiPassportAuthTest extends TestCase implements ApiAuthTestInterface
     protected $apiUser;
     protected $apiRoutes;
 
-    protected $validResponseForUnauthenticated = [
-        Response::HTTP_FOUND,             // 302
-        Response::HTTP_UNAUTHORIZED,      // 401
-    ];
-    
-    protected $HttpRequestMethods = [
-        'get',
-        'post',
-        'put',
-        'delete',
-        // 'patch',
-        // 'head',
-        // 'options',
-        // 'connect',
-        
-    ];
-
     /**
      * Check for results when authenticated
      *
