@@ -58,6 +58,20 @@ interface ApiAuthTestInterface
     // HELPERS
 
     /**
+     * httpRequestMethods
+     *
+     * @return array
+     */
+    public function httpRequestMethods();
+    
+    /**
+     * validResponseForunauthenticated
+     *
+     * @return array
+     */
+    public function validResponseForUnauthenticated();
+
+    /**
      * getApiRoutes
      *
      * @return bool

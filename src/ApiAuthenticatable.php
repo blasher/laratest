@@ -104,6 +104,8 @@ trait ApiAuthenticatable
         $routes = $this->getApiRoutes();
 
         foreach ($routes as $route)  {
+            echo "\n".'TESTING ' . $route->uri();
+            
             $requiresAuth = $this->apiRouteRequiresAuth( $route );
 
             if(!$requiresAuth)
@@ -118,6 +120,39 @@ trait ApiAuthenticatable
     
     // HELPERS
 
+    /**
+     * httpRequestMethods
+     *
+     * @return array
+     */
+    public function httpRequestMethods()
+    {
+        return [
+            'get',
+            'post',
+            'put',
+            'delete',
+            // 'patch',
+            // 'head',
+            // 'options',
+            // 'connect',
+        ];
+    }
+    
+    /**
+     * validResponseForunauthenticated
+     *
+     * @return array
+     */
+    public function validResponseForUnauthenticated()
+    {
+        return [
+           Response::HTTP_FOUND,             // 302
+           Response::HTTP_UNAUTHORIZED,      // 401
+           Response::HTTP_METHOD_NOT_ALLOWED // 405
+        ];
+    }
+    
     /**
      * getApiRoutes
      *
@@ -207,7 +242,7 @@ trait ApiAuthenticatable
      */
     public function getsErrorForUnauthenticatedRoute( $route )
     {
-        foreach ($this->HttpRequestMethods as $method)
+        foreach ($this->httpRequestMethods() as $method)
         {  $this->getsErrorForUnauthenticatedRouteAndMethod( $route, $method );
         }
 
@@ -225,7 +260,7 @@ trait ApiAuthenticatable
     {
         $response = $this->$method($route->uri());
         
-         $validUnauthedResponses = $this->validResponseForUnauthenticated;
+        $validUnauthedResponses = $this->validResponseForUnauthenticated();
         $status = $response->getStatusCode();
 
         try {
