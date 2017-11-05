@@ -2,11 +2,16 @@
 
 namespace Blasher\Laratest\Tests\API;
 
+use App\Factory;
+use App\User;
 use Blasher\Laratest\ApiAuthenticatable;
 use Blasher\Laratest\ApiAuthTestInterface as ApiAuthTestInterface;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response as Response;
+use Exception;
+use Route;
+use Schema;
+use Tests\TestCase;
 
 class ApiPassportAuthTest extends TestCase implements ApiAuthTestInterface
 {

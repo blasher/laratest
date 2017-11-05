@@ -2,12 +2,6 @@
 
 namespace Blasher\Laratest;
 
-use App\Factory;
-use App\User;
-use Exception;
-use Route;
-use Schema;
-
 interface ApiAuthTestInterface
 {
   
