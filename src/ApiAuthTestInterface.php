@@ -24,14 +24,6 @@ interface ApiAuthTestInterface
     public function ensureApiHasRoutes();
 
     /**
-     * Test ensure that user table is set up for token aunthentication.
-     *
-     * @test
-     * @return void
-     */
-    public function ensureUserTableHasApiTokenParam();
-
-    /**
      * Test to ensure that factory exists for user class.
      *
      * @test
