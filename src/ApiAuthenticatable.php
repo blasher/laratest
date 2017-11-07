@@ -41,18 +41,6 @@ trait ApiAuthenticatable
 
 
     /**
-     * Test ensure that user table is set up for token aunthentication.
-     *
-     * @test
-     * @return void
-     */
-    public function ensureUserTableHasApiTokenParam()
-    {
-        $this->assertTrue( Schema::hasColumn('users', 'api_token') );
-    }
-
-
-    /**
      * Test to ensure that factory exists for user class.
      *
      * @test
