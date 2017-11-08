@@ -5,6 +5,7 @@ namespace Blasher\Laratest;
 use App\Factory;
 use App\User;
 use Exception;
+use Faker\Generator as Faker;
 use Illuminate\Http\Response as Response;
 use Tests\TestCase;
 use Route;
@@ -52,7 +53,7 @@ trait ApiAuthenticatable
             $user = factory(User::class)->create();
         } catch (Exception $e)
         {
-            $msg  = 'User factory does not exist';
+            $msg  = 'User factory does not exist.';
             echo ( $msg . "\n" );
         }
 

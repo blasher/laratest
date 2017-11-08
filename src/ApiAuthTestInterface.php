@@ -21,7 +21,7 @@ interface ApiAuthTestInterface
      * @test
      * @return void
      */
-    public function ensureApiHasRoutes();
+    public function assertApiHasRoutes();
 
     /**
      * Test to ensure that factory exists for user class.
@@ -29,7 +29,7 @@ interface ApiAuthTestInterface
      * @test
      * @return void
      */
-    public function ensureUserFactoryExists();
+    public function assertUserFactoryExists();
 
     /**
      * Test to ensure that user exists .
