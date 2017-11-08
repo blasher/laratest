@@ -24,8 +24,40 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
     protected $apiRoutes;
 
     /**
-     * Check for results when authenticated
+     * Assert User model has api_token property.
      *
+     * @test
+     */
+    public function assertUserTableHasApiTokenProperty()
+    {
+        $user = new User;
+
+        $this->assertTrue(Schema::hasColumn('users', 'api_token') );
+    }
+
+   
+    /**
+     * Assert User model has api_token property.
+     *
+     * @test
+     */
+    public function assertUserModelHasApiTokenProperty()
+    {
+        $user = new User;
+
+        $fillable = $user->getFillable();
+        $guarded = $user->getGuarded();
+
+        $parms = $fillable + $guarded;
+        
+        $this->assertContains('api_token', $parms);
+    }
+
+   
+    /**
+     * Check for results when authenticated.
+     *
+     * @depends assertUserModelHasApiTokenProperty
      * @param  Illuminate\Routing\Route $route
      */
     public function getsJsonForAuthenticatedRoute( $route )
@@ -40,7 +72,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
     }
     
     /**
-     * create authenticated api user
+     * Create authenticated api user.
      *
      * @return User
      */
