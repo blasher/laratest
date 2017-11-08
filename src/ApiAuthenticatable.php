@@ -49,6 +49,8 @@ trait ApiAuthenticatable
      */
     public function assertUserFactoryExists()
     {
+        $user = '';
+
         try {
             $user = factory(User::class)->create();
         } catch (Exception $e)
@@ -69,6 +71,8 @@ trait ApiAuthenticatable
      */
     public function ensureUserApiUser()
     {
+        $user = '';
+
         try {
             $user = factory(User::class)->create();
         } catch (Exception $e)
