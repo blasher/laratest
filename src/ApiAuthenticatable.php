@@ -32,7 +32,7 @@ trait ApiAuthenticatable
      * @test
      * @return void
      */
-    public function ensureApiHasRoutes()
+    public function assertApiHasRoutes()
     {
         $hasApiRoutes = !empty($this->getApiRoutes());
 
@@ -46,7 +46,7 @@ trait ApiAuthenticatable
      * @test
      * @return void
      */
-    public function ensureUserFactoryExists()
+    public function assertUserFactoryExists()
     {
         try {
             $user = factory(User::class)->create();
