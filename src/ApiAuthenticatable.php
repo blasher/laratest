@@ -31,6 +31,7 @@ trait ApiAuthenticatable
      * Test to see if api has routes.
      *
      * @test
+     * @depends testExample
      * @return void
      */
     public function assertApiHasRoutes()
@@ -45,6 +46,7 @@ trait ApiAuthenticatable
      * Test to ensure that factory exists for user class.
      *
      * @test
+     * @depends testExample
      * @return void
      */
     public function assertUserFactoryExists()

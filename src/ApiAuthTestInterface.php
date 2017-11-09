@@ -19,6 +19,7 @@ interface ApiAuthTestInterface
      * Test to see if api has routes.
      *
      * @test
+     * @depends testExample
      * @return void
      */
     public function assertApiHasRoutes();
@@ -27,6 +28,7 @@ interface ApiAuthTestInterface
      * Test to ensure that factory exists for user class.
      *
      * @test
+     * @depends testExample
      * @return void
      */
     public function assertUserFactoryExists();
