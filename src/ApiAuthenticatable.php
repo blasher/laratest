@@ -69,7 +69,7 @@ trait ApiAuthenticatable
      * @test
      * @return void
      */
-    public function ensureUserApiUser()
+    public function ensureApiUser()
     {
         $user = '';
 

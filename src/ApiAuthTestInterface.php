@@ -37,7 +37,7 @@ interface ApiAuthTestInterface
      * @test
      * @return void
      */
-    public function ensureUserApiUser();
+    public function ensureApiUser();
 
     /**
      * test to determine whether all api routes are auth protected
