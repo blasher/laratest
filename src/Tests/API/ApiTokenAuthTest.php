@@ -83,7 +83,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
 
         $user = User::findOrFail(1);
         
-        $this->assertEquals($this->user->name(), $user->name() );
+        $this->assertEquals($this->user->name, $user->name );
 
         return $user;
     }
