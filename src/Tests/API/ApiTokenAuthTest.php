@@ -27,6 +27,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
      * Assert User model has api_token property.
      *
      * @test
+     * @depends testExample
      */
     public function assertUserTableHasApiTokenProperty()
     {
@@ -40,6 +41,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
      * Assert User model has api_token property.
      *
      * @test
+     * @depends testExample
      */
     public function assertUserModelHasApiTokenProperty()
     {
