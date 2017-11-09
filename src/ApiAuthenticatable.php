@@ -64,9 +64,10 @@ trait ApiAuthenticatable
 
 
     /**
-     * Test to ensure that user exists .
+     * Test to ensure that user exists.
      *
      * @test
+     * @depends assertUserFactoryExists
      * @return void
      */
     public function ensureApiUser()
@@ -86,9 +87,11 @@ trait ApiAuthenticatable
 
 
     /**
-     * test to determine whether all api routes are auth protected
+     * Test to determine whether all api routes are auth protected.
      *
      * @test
+     * @depends ensureApiUser
+     * @depends assertApiHasRoutes
      * @return void
      */
     public function apiRoutesRequireAuth()
@@ -114,7 +117,7 @@ trait ApiAuthenticatable
     // HELPERS
 
     /**
-     * httpRequestMethods
+     * httpRequestMethods.
      *
      * @return array
      */
@@ -133,7 +136,7 @@ trait ApiAuthenticatable
     }
     
     /**
-     * validResponseForunauthenticated
+     * validResponseForunauthenticated.
      *
      * @return array
      */
@@ -147,7 +150,7 @@ trait ApiAuthenticatable
     }
     
     /**
-     * getApiRoutes
+     * getApiRoutes.
      *
      * @return bool
      */
@@ -171,7 +174,7 @@ trait ApiAuthenticatable
 
     
     /**
-     * filterApiRoutes
+     * filterApiRoutes.
      *
      * @param  Illuminate\Routing\RouteCollection $routes
      * @return Illuminate\Routing\RouteCollection
@@ -190,7 +193,7 @@ trait ApiAuthenticatable
     }
     
     /**
-     * isApiRoute
+     * isApiRoute.
      *
      * @param  string $uri
      * @return bool
@@ -202,7 +205,7 @@ trait ApiAuthenticatable
 
 
     /**
-     * cacheApiRoutes
+     * cacheApiRoutes.
      *
      * @param  Illuminate\Routing\RouteCollection $routes
      * @return bool
@@ -213,7 +216,7 @@ trait ApiAuthenticatable
 
     
     /**
-     * determine whether a single api route is auth protected
+     * Determine whether a single api route is auth protected.
      *
      * @param  Illuminate\Routing\Route $route
      * @return bool

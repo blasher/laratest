@@ -32,17 +32,20 @@ interface ApiAuthTestInterface
     public function assertUserFactoryExists();
 
     /**
-     * Test to ensure that user exists .
+     * Test to ensure that user exists.
      *
      * @test
+     * @depends assertUserFactoryExists
      * @return void
      */
     public function ensureApiUser();
 
     /**
-     * test to determine whether all api routes are auth protected
+     * Test to determine whether all api routes are auth protected.
      *
      * @test
+     * @depends ensureApiUser
+     * @depends assertApiHasRoutes
      * @return void
      */
     public function apiRoutesRequireAuth();
@@ -50,7 +53,7 @@ interface ApiAuthTestInterface
     // HELPERS
 
     /**
-     * httpRequestMethods
+     * httpRequestMethods.
      *
      * @return array
      */
@@ -64,14 +67,14 @@ interface ApiAuthTestInterface
     public function validResponseForUnauthenticated();
 
     /**
-     * getApiRoutes
+     * getApiRoutes.
      *
      * @return bool
      */
     public function getApiRoutes();
     
     /**
-     * filterApiRoutes
+     * filterApiRoutes.
      *
      * @param  Illuminate\Routing\RouteCollection $routes
      * @return Illuminate\Routing\RouteCollection
@@ -79,7 +82,7 @@ interface ApiAuthTestInterface
     public function filterApiRoutes($routes);
     
     /**
-     * isApiRoute
+     * isApiRoute.
      *
      * @param  string $uri
      * @return bool
@@ -87,7 +90,7 @@ interface ApiAuthTestInterface
     public function isApiRoute($uri);
 
     /**
-     * cacheApiRoutes
+     * cacheApiRoutes.
      *
      * @param  Illuminate\Routing\RouteCollection $routes
      * @return bool
@@ -95,7 +98,7 @@ interface ApiAuthTestInterface
     public function cacheApiRoutes($routes);
     
     /**
-     * determine whether a single api route is auth protected
+     * Determine whether a single api route is auth protected.
      *
      * @param  Illuminate\Routing\Route $route
      * @return bool
@@ -122,14 +125,14 @@ interface ApiAuthTestInterface
     public function getsErrorForUnauthenticatedRouteAndMethod($route,$method);
     
     /**
-     * Check for results when authenticated
+     * Check for results when authenticated.
      *
      * @param  Illuminate\Routing\Route $route
      */
     public function getsJsonForAuthenticatedRoute($route);
     
     /**
-     * create authenticated api user
+     * Create authenticated api user.
      *
      * @return User
      */
