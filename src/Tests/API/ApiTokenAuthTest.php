@@ -65,10 +65,15 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
         $user = $this->createApiUser();
         $route_uri = $route->uri().'?api_token='.$user->api_token;
         
+        try {
         $response = $this->actingAs($user)
                          ->get( $route->uri())
                          ->assertStatus( Response::HTTP_OK )
                          ->seeJson( [] );
+        }
+        catch( Exception $e)
+        {  echo "\n". 'Failed authentication for ' . $route->uri() . "\n";
+        }
     }
     
     /**
