@@ -54,19 +54,20 @@ interface ApiAuthTestInterface
     public function assertUserFactoryExists();
 
     /**
-     * Test to ensure that user exists.
+     * Test to ensure that a user can be created.
      *
      * @test
+     * @depends assertUserTableExists
      * @depends assertUserFactoryExists
      * @return void
      */
-    public function ensureApiUser();
+    public function assertApiUserCanBeCreated();
 
     /**
      * Test to determine whether all api routes are auth protected.
      *
      * @test
-     * @depends ensureApiUser
+     * @depends ensureApiUserCanBeCreated
      * @depends assertApiHasRoutes
      * @return void
      */

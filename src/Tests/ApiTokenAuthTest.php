@@ -63,10 +63,12 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
      */
     public function getsJsonForAuthenticatedRoute( $route )
     {
-        $route_uri = $route->uri().'?api_token='.$this->apiUser->api_token;
+        $user = $this->createApiUser();
+        
+        $route_uri = $route->uri().'?api_token='.$user->api_token;
         
         try {
-        $response = $this->actingAs($this->apiUser)
+        $response = $this->actingAs($user)
                          ->get( $route->uri())
                          ->assertStatus( Response::HTTP_OK )
                          ->seeJson( [] );

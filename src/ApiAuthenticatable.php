@@ -103,24 +103,26 @@ trait ApiAuthenticatable
 
 
     /**
-     * Test to ensure that user exists.
+     * Test to ensure that a user can be created.
      *
      * @test
      * @depends assertUserTableExists
      * @depends assertUserFactoryExists
      * @return void
      */
-    public function ensureApiUser()
+    public function assertApiUserCanBeCreated()
     {
+        $user = '';
+        
         try {
-            $this->apiUser = factory(User::class)->create();
+            $user = $this->createApiUser();
         } catch (Exception $e)
         {
             $msg  = 'User could not be created with factory.';
             echo ( $msg . "\n" );
         }
 
-        $this->assertTrue( is_object($this->apiUser) );
+        $this->assertTrue( is_object($user) );
     }
 
 
@@ -128,7 +130,7 @@ trait ApiAuthenticatable
      * Test to determine whether all api routes are auth protected.
      *
      * @test
-     * @depends ensureApiUser
+     * @depends assertApiUserCanBeCreated
      * @depends assertApiHasRoutes
      * @return void
      */
@@ -185,6 +187,17 @@ trait ApiAuthenticatable
            Response::HTTP_UNAUTHORIZED,      // 401
            Response::HTTP_METHOD_NOT_ALLOWED // 405
         ];
+    }
+
+
+    /**
+     * Create api user.
+     *
+     * @return User
+     */
+    public function createApiUser()
+    {
+        return factory(User::class)->create();
     }
     
     /**
