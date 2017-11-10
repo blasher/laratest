@@ -7,9 +7,24 @@ This is meant to be a generic test suite for laravel.  It is meant to give a lit
 
 ## Installation
 
+1) Require Package
+
 ```
-composer install --dev blasher/laratest
+composer requre blasher/laratest
 ```
+
+2) Authorization Scaffolding
+
+If you haven't already built your authorization scaffolding, make sure do to
+
+```
+php artisan make:auth
+```
+
+or tests will fail due to 500 errors when redirecting to "/login" route
+
+
+3) Publish tests
 
 Then publush the appropriate tests via the commands below:
 
@@ -20,7 +35,6 @@ or
 ```
 php artisan vendor:publish --tag=laratest_passport
 ```
-
 
 ## To do
 
