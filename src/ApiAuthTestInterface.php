@@ -16,6 +16,26 @@ interface ApiAuthTestInterface
     public function testExample();
 
     /**
+     * A basic test example.
+     *
+     * @test
+     * @depends testExample
+     * @todo pretty sure this test will always pass
+     * @return void
+     */
+    public function assertDBConnectionExists();
+
+    /**
+     * A basic test example.
+     *
+     * @test
+     * @depends testExample
+     * @depends assertDBConnectionExists
+     * @return void
+     */
+    public function assertUserTableExists();
+
+    /**
      * Test to see if api has routes.
      *
      * @test
