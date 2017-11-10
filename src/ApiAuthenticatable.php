@@ -4,6 +4,7 @@ namespace Blasher\Laratest;
 
 use App\Factory;
 use App\User;
+use DB;
 use Exception;
 use Faker\Generator as Faker;
 use Illuminate\Http\Response as Response;
@@ -27,6 +28,42 @@ trait ApiAuthenticatable
     }
 
 
+    /**
+     * A basic test example.
+     *
+     * @test
+     * @depends testExample
+     * @todo pretty sure this test will always pass
+     * @return void
+     */
+    public function assertDBConnectionExists()
+    {
+        $pdo = '';
+        
+        try {
+            $pdo = DB::connection()->getPdo();
+        } catch (Exception $e)
+        {
+        }
+        
+        $this->assertTrue( is_object($pdo) );
+    }
+
+
+    /**
+     * A basic test example.
+     *
+     * @test
+     * @depends testExample
+     * @depends assertDBConnectionExists
+     * @return void
+     */
+    public function assertUserTableExists()
+    {
+        $this->assertTrue( Schema::hasTable('users') );
+    }
+
+    
     /**
      * Test to see if api has routes.
      *
@@ -69,6 +106,7 @@ trait ApiAuthenticatable
      * Test to ensure that user exists.
      *
      * @test
+     * @depends assertUserTableExists
      * @depends assertUserFactoryExists
      * @return void
      */
