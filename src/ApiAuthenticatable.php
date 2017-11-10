@@ -112,17 +112,15 @@ trait ApiAuthenticatable
      */
     public function ensureApiUser()
     {
-        $user = '';
-
         try {
-            $user = factory(User::class)->create();
+            $this->apiUser = factory(User::class)->create();
         } catch (Exception $e)
         {
             $msg  = 'User could not be created with factory.';
             echo ( $msg . "\n" );
         }
 
-        $this->assertTrue( is_object($user) );
+        $this->assertTrue( is_object($this->apiUser) );
     }
 
 

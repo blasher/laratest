@@ -153,11 +153,4 @@ interface ApiAuthTestInterface
      */
     public function getsJsonForAuthenticatedRoute($route);
     
-    /**
-     * Create authenticated api user.
-     *
-     * @return User
-     */
-    public function createApiUser();
-    
 }
