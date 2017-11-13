@@ -143,12 +143,13 @@ interface ApiAuthTestInterface
     /**
      * Determine whether a single api route is accessible when authorized.
      *
+     * @param  User $user
      * @param  Illuminate\Routing\Route $route
      * @return bool
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
-    public function assertApiRouteIsAccessibleWhenAuthorized($route);
+    public function assertApiRouteIsAccessibleWhenAuthorized($user, $route);
     
     /**
      * Check for unauthenticated error or redirect when not authenticated
@@ -174,4 +175,15 @@ interface ApiAuthTestInterface
      */
     public function getsJsonForAuthenticatedRoute($route);
     
+
+    /**
+     * Check for results for a given route and method when authenticated.
+     *
+     * @depends assertUserModelHasApiTokenProperty
+     * @param  User $user
+     * @param  Illuminate\Routing\Route $route
+     * @param  string $method
+     */
+    public function getsJsonForAuthenticatedRouteAndMethod( $useer, $route, $method );
+
 }

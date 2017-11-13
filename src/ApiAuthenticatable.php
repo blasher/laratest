@@ -7,6 +7,7 @@ use App\User;
 use DB;
 use Exception;
 use Faker\Generator as Faker;
+use Illuminate\Http\Request as Request;
 use Illuminate\Http\Response as Response;
 use Tests\TestCase;
 use Route;
@@ -163,12 +164,13 @@ trait ApiAuthenticatable
     public function assertApiRoutesAreAccessibleWhenAuthorized()
     {
         $allRoutesRequireAuth = true;
+        $user = $this->createApiUser();
         $routes = $this->getApiRoutes();
 
         foreach ($routes as $route)  {
             echo "\n".'TESTING ' . $route->uri();
             
-            $requiresAuth = $this->assertApiRouteIsAccessibleWhenAuthorized( $route );
+            $requiresAuth = $this->assertApiRouteIsAccessibleWhenAuthorized( $user, $route );
 
             if(!$requiresAuth)
             {  $allRoutesRequireAuth = false;
@@ -309,14 +311,15 @@ trait ApiAuthenticatable
     /**
      * Determine whether a single api route is accesible when authorized.
      *
+     * @param  User $user
      * @param  Illuminate\Routing\Route $route
      * @return bool
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
-    public function assertApiRouteisAccessibleWhenAuthorized( $route )
+    public function assertApiRouteIsAccessibleWhenAuthorized( $user, $route )
     {
-        $this->getsJsonForAuthenticatedRoute($route);
+        $this->getsJsonForAuthenticatedRoute($user, $route);
     }
 
     
@@ -366,4 +369,51 @@ trait ApiAuthenticatable
 
         return $assertion;
     }
+
+
+    /**
+     * Check for results when authenticated.
+     *
+     * @depends assertUserModelHasApiTokenProperty
+     * @param  User $user
+     * @param  Illuminate\Routing\Route $route
+     */
+    public function getsJsonForAuthenticatedRoute( $user, $route )
+    {
+        $assertion = true;
+        
+        foreach ($this->httpRequestMethods() as $method)
+        {   if( !( $this->getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method )) )
+            {  $assertion = false;
+            }
+        }
+
+        return $assertion;
+    }
+
+
+
+    /**
+     * Check for results for a given route and method when authenticated.
+     *
+     * @depends assertUserModelHasApiTokenProperty
+     * @param  User $user
+     * @param  Illuminate\Routing\Route $route
+     * @param  string $method
+     */
+    public function getsJsonForAuthenticatedRouteAndMethod( $useer, $route, $method )
+    {
+        $route_uri = $route->uri().'?api_token='.$user->api_token;
+        
+        try {
+        $response = $this->actingAs($user)
+                         ->get( $route->uri())
+                         ->assertStatus( Response::HTTP_OK )
+                         ->seeJson( [] );
+        }
+        catch( Exception $e)
+        {  echo "\n". 'Failed authentication for ' . $route->uri() . "\n";
+        }
+    }
+    
 }
