@@ -64,6 +64,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
     public function getsJsonForAuthenticatedRoute( $route )
     {
         $user = $this->createApiUser();
+        
         $route_uri = $route->uri().'?api_token='.$user->api_token;
         
         try {
@@ -76,22 +77,6 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
         {  echo "\n". 'Failed authentication for ' . $route->uri() . "\n";
         }
     }
-    
-    /**
-     * Create authenticated api user.
-     *
-     * @return User
-     */
-    public function createApiUser()
-    {
-        $this->user = factory(User::class)->create();
-        $this->user->save();
-
-        $user = User::findOrFail(1);
-        
-        $this->assertEquals($this->user->name, $user->name );
-
-        return $user;
-    }
+ 
 
 }
