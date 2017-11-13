@@ -140,8 +140,6 @@ trait ApiAuthenticatable
         $routes = $this->getApiRoutes();
 
         foreach ($routes as $route)  {
-            echo "\n".'TESTING ' . $route->uri();
-            
             $requiresAuth = $this->assertApiRouteIsProtectedWhenUnauthorized( $route );
 
             if(!$requiresAuth)
@@ -304,7 +302,7 @@ trait ApiAuthenticatable
      */
     public function assertApiRouteIsProtectedWhenUnauthorized( $route )
     {
-        $this->getsErrorForUnauthenticatedRoute($route);
+        return $this->getsErrorForUnauthenticatedRoute($route);
     }
 
     
@@ -330,11 +328,15 @@ trait ApiAuthenticatable
      */
     public function getsErrorForUnauthenticatedRoute( $route )
     {
+        $assertion = true;
+        
         foreach ($this->httpRequestMethods() as $method)
-        {  $this->getsErrorForUnauthenticatedRouteAndMethod( $route, $method );
+        {   if( !( $this->getsErrorForUnauthenticatedRouteAndMethod( $route, $method )) )
+            {  $assertion = false;
+            }
         }
 
-        return true;
+        return $assertion;
     }
 
     /**
@@ -347,6 +349,7 @@ trait ApiAuthenticatable
     public function getsErrorForUnauthenticatedRouteAndMethod( $route, $method )
     {
         $response = $this->$method($route->uri());
+        $assertion = true;
         
         $validUnauthedResponses = $this->validResponseForUnauthenticated();
         $status = $response->getStatusCode();
@@ -354,11 +357,13 @@ trait ApiAuthenticatable
         try {
             $this->assertContains( $status , $validUnauthedResponses);
         } catch (Exception $e) {
+            $assertion = false;
+            
             $msg  = 'Unprotected API route ' . $route->uri . '.  Returned  ' . $status . '.  ';
             $msg .= 'When unathenticated api should return ' . implode(' or ', $validUnauthedResponses);
             echo ( $msg . "\n" );
         }
 
-        return true;
+        return $assertion;
     }
 }
