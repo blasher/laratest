@@ -137,19 +137,17 @@ trait ApiAuthenticatable
      */
     public function assertApiRoutesAreProtectedWhenUnauthorized()
     {
-        $allRoutesRequireAuth = true;
+        $assertion = true;
         $routes = $this->getApiRoutes();
 
         foreach ($routes as $route)  {
-            $requiresAuth = $this->assertApiRouteIsProtectedWhenUnauthorized( $route );
-
-            if(!$requiresAuth)
-            {  $allRoutesRequireAuth = false;
+            if(!$this->assertApiRouteIsProtectedWhenUnauthorized( $route ))
+            {  $assertion = false;
                break;
             }
         }                
 
-        $this->assertTrue($allRoutesRequireAuth);
+        $this->assertTrue($assertion);
     }
 
 
@@ -163,22 +161,18 @@ trait ApiAuthenticatable
      */
     public function assertApiRoutesAreAccessibleWhenAuthorized()
     {
-        $allRoutesRequireAuth = true;
+        $assertion = true;
         $user = $this->createApiUser();
         $routes = $this->getApiRoutes();
 
         foreach ($routes as $route)  {
-            echo "\n".'TESTING ' . $route->uri();
-            
-            $requiresAuth = $this->assertApiRouteIsAccessibleWhenAuthorized( $user, $route );
-
-            if(!$requiresAuth)
-            {  $allRoutesRequireAuth = false;
+            if(!$this->assertApiRouteIsAccessibleWhenAuthorized( $user, $route ) )
+            {  $assertion = false;
                break;
             }
         }                
 
-        $this->assertTrue($allRoutesRequireAuth);
+        $this->assertTrue($assertion);
     }
     
     
@@ -319,7 +313,7 @@ trait ApiAuthenticatable
      */
     public function assertApiRouteIsAccessibleWhenAuthorized( $user, $route )
     {
-        $this->getsJsonForAuthenticatedRoute($user, $route);
+        return $this->getsJsonForAuthenticatedRoute($user, $route);
     }
 
     
@@ -381,9 +375,10 @@ trait ApiAuthenticatable
     public function getsJsonForAuthenticatedRoute( $user, $route )
     {
         $assertion = true;
-        
-        foreach ($this->httpRequestMethods() as $method)
-        {   if( !( $this->getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method )) )
+
+        foreach ($route->methods as $method)
+        {
+            if( !( $this->getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method )) )
             {  $assertion = false;
             }
         }
@@ -392,28 +387,30 @@ trait ApiAuthenticatable
     }
 
 
-
     /**
-     * Check for results for a given route and method when authenticated.
+     * Check for results for a given route and method with authentication.
      *
      * @depends assertUserModelHasApiTokenProperty
      * @param  User $user
      * @param  Illuminate\Routing\Route $route
      * @param  string $method
      */
-    public function getsJsonForAuthenticatedRouteAndMethod( $useer, $route, $method )
+    public function getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method )
     {
-        $route_uri = $route->uri().'?api_token='.$user->api_token;
+        $assertion = true;
+        $response = $this->makeApiCallWithAuthentication($user, $route, $method);
         
         try {
-        $response = $this->actingAs($user)
-                         ->get( $route->uri())
-                         ->assertStatus( Response::HTTP_OK )
-                         ->seeJson( [] );
+            $response->assertStatus( Response::HTTP_OK );
+            $response->seeJson( [] );
+        } catch( Exception $e)
+        {   echo "\n". 'Failed authentication for '.$method.' @ ' .$route->uri()."\n";
+            echo 'User api token: '.$user->api_token;
+            //            dd($response->getStatus() );
+            $assertion = false;
         }
-        catch( Exception $e)
-        {  echo "\n". 'Failed authentication for ' . $route->uri() . "\n";
-        }
+
+        return $assertion;
     }
     
 }

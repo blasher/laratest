@@ -54,29 +54,48 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
         $this->assertContains('api_token', $parms);
     }
 
-   
-    /**
-     * Check for results when authenticated.
-     *
-     * @depends assertUserModelHasApiTokenProperty
-     * @param  Illuminate\Routing\Route $route
-     */
-    public function getsJsonForAuthenticatedRoute( $route )
-    {
-        $user = $this->createApiUser();
-        
-        $route_uri = $route->uri().'?api_token='.$user->api_token;
-        
-        try {
-        $response = $this->actingAs($user)
-                         ->get( $route->uri())
-                         ->assertStatus( Response::HTTP_OK )
-                         ->seeJson( [] );
-        }
-        catch( Exception $e)
-        {  echo "\n". 'Failed authentication for ' . $route->uri() . "\n";
-        }
-    }
- 
 
+    /**
+     * Ensure User has api_token.
+     *
+     */
+    public function ensureUserHasApiToken($user)
+    {
+        $api_token = $user->api_token;
+
+        if(!($user->api_token))
+        {
+            $api_token = str_random(60);
+            $user->api_token = $api_token;
+            $user->save();
+        }
+
+        return $api_token;
+    }
+
+
+    /**
+     * Make api call with authentication.
+     *
+     * @param   User $user
+     * @param   Illuminate\Routing\Route $route
+     * @param   string $method
+     * @todo    more graceful approach to testing HEAD method
+     */
+    public function makeApiCallWithAuthentication( $user, $route, $method )
+    {
+        $api_token = $this->ensureUserHasApiToken($user);
+
+        $method = strtolower($method);
+        $method = str_replace('head', 'get', $method);
+        
+        $route_uri = $route->uri().'?api_token='.$api_token;
+
+        //        echo "\n".'TESTING '.$user->name.' - '.$method.' - '.$route_uri."\n";
+        
+        $response = $this->actingAs($user)
+                         ->$method( $route_uri );
+        
+        return($response);
+    }
 }

@@ -171,19 +171,31 @@ interface ApiAuthTestInterface
     /**
      * Check for results when authenticated.
      *
+     * @depends assertUserModelHasApiTokenProperty
+     * @param  User $user
      * @param  Illuminate\Routing\Route $route
      */
-    public function getsJsonForAuthenticatedRoute($route);
+    public function getsJsonForAuthenticatedRoute($user, $route);
     
 
     /**
-     * Check for results for a given route and method when authenticated.
+     * Check for results for a given route and method with authentication.
      *
      * @depends assertUserModelHasApiTokenProperty
      * @param  User $user
      * @param  Illuminate\Routing\Route $route
      * @param  string $method
      */
-    public function getsJsonForAuthenticatedRouteAndMethod( $useer, $route, $method );
+    public function getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method );
 
+    
+    /**
+     * Make api call with authentication.
+     *
+     * @depends assertUserModelHasApiTokenProperty
+     * @param  User $user
+     * @param  Illuminate\Routing\Route $route
+     * @param  string $method
+     */
+    public function makeApiCallWithAuthentication( $user, $route, $method );
 }
