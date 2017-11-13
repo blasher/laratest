@@ -127,14 +127,14 @@ trait ApiAuthenticatable
 
 
     /**
-     * Test to determine whether all api routes are auth protected.
+     * Test to determine whether all api routes are auth protected when unauthorized.
      *
      * @test
      * @depends assertApiUserCanBeCreated
      * @depends assertApiHasRoutes
      * @return void
      */
-    public function apiRoutesRequireAuth()
+    public function assertApiRoutesAreProtectedWhenUnauthorized()
     {
         $allRoutesRequireAuth = true;
         $routes = $this->getApiRoutes();
@@ -142,7 +142,7 @@ trait ApiAuthenticatable
         foreach ($routes as $route)  {
             echo "\n".'TESTING ' . $route->uri();
             
-            $requiresAuth = $this->apiRouteRequiresAuth( $route );
+            $requiresAuth = $this->assertApiRouteIsProtectedWhenUnauthorized( $route );
 
             if(!$requiresAuth)
             {  $allRoutesRequireAuth = false;
@@ -153,6 +153,34 @@ trait ApiAuthenticatable
         $this->assertTrue($allRoutesRequireAuth);
     }
 
+
+    /**
+     * Test to determine whether all api routes are auth accessible when authorized.
+     *
+     * @test
+     * @depends assertApiUserCanBeCreated
+     * @depends assertApiHasRoutes
+     * @return void
+     */
+    public function assertApiRoutesAreAccessibleWhenAuthorized()
+    {
+        $allRoutesRequireAuth = true;
+        $routes = $this->getApiRoutes();
+
+        foreach ($routes as $route)  {
+            echo "\n".'TESTING ' . $route->uri();
+            
+            $requiresAuth = $this->assertApiRouteIsAccessibleWhenAuthorized( $route );
+
+            if(!$requiresAuth)
+            {  $allRoutesRequireAuth = false;
+               break;
+            }
+        }                
+
+        $this->assertTrue($allRoutesRequireAuth);
+    }
+    
     
     // HELPERS
 
@@ -267,17 +295,30 @@ trait ApiAuthenticatable
 
     
     /**
-     * Determine whether a single api route is auth protected.
+     * Determine whether a single api route is protected when unahthorized.
      *
      * @param  Illuminate\Routing\Route $route
      * @return bool
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
-    public function apiRouteRequiresAuth( $route )
+    public function assertApiRouteIsProtectedWhenUnauthorized( $route )
+    {
+        $this->getsErrorForUnauthenticatedRoute($route);
+    }
+
+    
+    /**
+     * Determine whether a single api route is accesible when authorized.
+     *
+     * @param  Illuminate\Routing\Route $route
+     * @return bool
+     *
+     * @todo add tests for regular expressioned routes i.e. /api/user/{user}
+     */
+    public function assertApiRouteisAccessibleWhenAuthorized( $route )
     {
         $this->getsJsonForAuthenticatedRoute($route);
-        $this->getsErrorForUnauthenticatedRoute($route);
     }
 
     

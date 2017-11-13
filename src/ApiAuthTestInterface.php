@@ -64,14 +64,24 @@ interface ApiAuthTestInterface
     public function assertApiUserCanBeCreated();
 
     /**
-     * Test to determine whether all api routes are auth protected.
+     * Test to determine whether all api routes are auth protected when unauthorized.
      *
      * @test
      * @depends ensureApiUserCanBeCreated
      * @depends assertApiHasRoutes
      * @return void
      */
-    public function apiRoutesRequireAuth();
+    public function assertApiRoutesAreProtectedWhenUnauthorized();
+    
+    /**
+     * Test to determine whether api routes are accessible when authorized.
+     *
+     * @test
+     * @depends ensureApiUserCanBeCreated
+     * @depends assertApiHasRoutes
+     * @return void
+     */
+    public function assertApiRoutesAreAccessibleWhenAuthorized();
     
     // HELPERS
 
@@ -121,14 +131,24 @@ interface ApiAuthTestInterface
     public function cacheApiRoutes($routes);
     
     /**
-     * Determine whether a single api route is auth protected.
+     * Determine whether a single api route is protected when unauthorized.
      *
      * @param  Illuminate\Routing\Route $route
      * @return bool
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
-    public function apiRouteRequiresAuth($route);
+    public function assertApiRouteIsProtectedWhenUnauthorized($route);
+    
+    /**
+     * Determine whether a single api route is accessible when authorized.
+     *
+     * @param  Illuminate\Routing\Route $route
+     * @return bool
+     *
+     * @todo add tests for regular expressioned routes i.e. /api/user/{user}
+     */
+    public function assertApiRouteIsAccessibleWhenAuthorized($route);
     
     /**
      * Check for unauthenticated error or redirect when not authenticated
