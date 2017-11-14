@@ -402,11 +402,9 @@ trait ApiAuthenticatable
         
         try {
             $response->assertStatus( Response::HTTP_OK );
-            $response->seeJson( [] );
         } catch( Exception $e)
         {   echo "\n". 'Failed authentication for '.$method.' @ ' .$route->uri()."\n";
             echo 'User api token: '.$user->api_token;
-            //            dd($response->getStatus() );
             $assertion = false;
         }
 
