@@ -20,39 +20,27 @@ class ApiPassportAuthTest extends TestCase implements ApiAuthTestInterface
 
     // PROPERTIES
     
-    protected $apiUser;
-    protected $apiRoutes;
-
-    /**
-     * Check for results when authenticated
+     /**
+     * Make api call with authentication.
      *
+     * @depends assertUserModelHasApiTokenProperty
+     * @param  User $user
      * @param  Illuminate\Routing\Route $route
+     * @param  string $method
      */
-    public function getsJsonForAuthenticatedRoute( $route )
+    public function makeApiCallWithAuthentication( $user, $route, $method )
     {
-        $user = $this->createApiUser();
+        echo $user->name.' - '.$route->uri().' - '.$method."\n";
         $route_uri = $route->uri().'?api_token='.$user->api_token;
-        
-        $response = $this->actingAs($user)
-                         ->get( $route->uri())
-                         ->assertStatus( Response::HTTP_OK )
-                         ->seeJson( [] );
-    }
-    
-    /**
-     * create authenticated api user
-     *
-     * @return User
-     */
-    public function createApiUser()
-    {
-        $this->user = factory(User::class)->create();
-        $this->user->save();
 
-        $user = User::findOrFail(1);
-        
-        $this->assertEquals($this->user->name(), $user->name() );
+        $response = $this->withHeaders([
+            'X-Header' => 'Value',
+        ])->json('POST', '/user', ['name' => 'Sally']);
 
-        return $user;
+        
     }
+
+
+        
+
 }
