@@ -38,8 +38,8 @@ php artisan vendor:publish --tag=laratest_passport
 
 ## To do
 
-  * fix token auth tests
-  * write code for passport authentication
+  * modify token auth test to compare data returned from api call to internally generated route output
+  * write code for passport authentication testing
 
 
 ## License
