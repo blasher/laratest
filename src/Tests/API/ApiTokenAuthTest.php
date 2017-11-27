@@ -6,9 +6,10 @@ use App\Factory;
 use App\User;
 use Blasher\Laratest\ApiAuthenticatable;
 use Blasher\Laratest\ApiAuthTestInterface as ApiAuthTestInterface;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response as Response;
-use Exception;
+use Request;
 use Route;
 use Schema;
 use Tests\TestCase;
@@ -86,8 +87,11 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
     {
         $api_token = $this->ensureUserHasApiToken($user);
 
-        $method = strtolower($method);
-        $method = str_replace('head', 'get', $method);
+        $method = str_replace('head', 'get', strtolower($method));
+
+        //        $request = Request::create('/'.$route->uri(), strtoupper($method));
+        //        $expected_response = Route::dispatch($request);
+        //        dd($expected_response);
         
         $route_uri = $route->uri().'?api_token='.$api_token;
 
