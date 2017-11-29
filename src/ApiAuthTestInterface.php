@@ -4,13 +4,13 @@ namespace Blasher\Laratest;
 
 interface ApiAuthTestInterface
 {
-  
     // TESTS
 
     /**
      * A basic test example.
      *
      * @test
+     *
      * @return void
      */
     public function testExample();
@@ -20,7 +20,9 @@ interface ApiAuthTestInterface
      *
      * @test
      * @depends testExample
+     *
      * @todo pretty sure this test will always pass
+     *
      * @return void
      */
     public function assertDBConnectionExists();
@@ -30,7 +32,9 @@ interface ApiAuthTestInterface
      *
      * @test
      * @depends testExample
+     *
      * @depends assertDBConnectionExists
+     *
      * @return void
      */
     public function assertUserTableExists();
@@ -40,6 +44,7 @@ interface ApiAuthTestInterface
      *
      * @test
      * @depends testExample
+     *
      * @return void
      */
     public function assertApiHasRoutes();
@@ -49,6 +54,7 @@ interface ApiAuthTestInterface
      *
      * @test
      * @depends testExample
+     *
      * @return void
      */
     public function assertUserFactoryExists();
@@ -59,6 +65,7 @@ interface ApiAuthTestInterface
      * @test
      * @depends assertUserTableExists
      * @depends assertUserFactoryExists
+     *
      * @return void
      */
     public function assertApiUserCanBeCreated();
@@ -69,16 +76,18 @@ interface ApiAuthTestInterface
      * @test
      * @depends ensureApiUserCanBeCreated
      * @depends assertApiHasRoutes
+     *
      * @return void
      */
     public function assertApiRoutesAreProtectedWhenUnauthorized();
-    
+
     /**
      * Test to determine whether api routes are accessible when authorized.
      *
      * @test
      * @depends ensureApiUserCanBeCreated
      * @depends assertApiHasRoutes
+     *
      * @return void
      */
     public function assertApiRoutesAreAccessibleWhenAuthorized();
@@ -93,7 +102,7 @@ interface ApiAuthTestInterface
     public function httpRequestMethods();
     
     /**
-     * validResponseForunauthenticated
+     * validResponseForunauthenticated.
      *
      * @return array
      */
@@ -105,19 +114,21 @@ interface ApiAuthTestInterface
      * @return bool
      */
     public function getApiRoutes();
-    
+
     /**
      * filterApiRoutes.
      *
-     * @param  Illuminate\Routing\RouteCollection $routes
+     * @param Illuminate\Routing\RouteCollection $routes
+     *
      * @return Illuminate\Routing\RouteCollection
      */
     public function filterApiRoutes($routes);
-    
+
     /**
      * isApiRoute.
      *
-     * @param  string $uri
+     * @param string $uri
+     *
      * @return bool
      */
     public function isApiRoute($uri);
@@ -125,37 +136,40 @@ interface ApiAuthTestInterface
     /**
      * cacheApiRoutes.
      *
-     * @param  Illuminate\Routing\RouteCollection $routes
+     * @param Illuminate\Routing\RouteCollection $routes
+     *
      * @return bool
      */
     public function cacheApiRoutes($routes);
-    
+
     /**
      * Determine whether a single api route is protected when unauthorized.
      *
-     * @param  Illuminate\Routing\Route $route
+     * @param Illuminate\Routing\Route $route
+     *
      * @return bool
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
     public function assertApiRouteIsProtectedWhenUnauthorized($route);
-    
+
     /**
      * Determine whether a single api route is accessible when authorized.
      *
-     * @param  User $user
-     * @param  Illuminate\Routing\Route $route
+     * @param User $user
+     * @param Illuminate\Routing\Route $route
+     *
      * @return bool
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
     public function assertApiRouteIsAccessibleWhenAuthorized($user, $route);
-    
+
     /**
      * Check for unauthenticated error or redirect when not authenticated
      * for all http request methods given a route.
      *
-     * @param  Illuminate\Routing\Route $route
+     * @param Illuminate\Routing\Route $route
      */
     public function getsErrorForUnauthenticatedRoute($route);
 
@@ -163,39 +177,37 @@ interface ApiAuthTestInterface
      * Check for unauthenticated error or redirect when not authenticated
      * given a route and http reuest method.
      *
-     * @param  Illuminate\Routing\Route $route
-     * @param  string $method
+     * @param Illuminate\Routing\Route $route
+     * @param string $method
      */
     public function getsErrorForUnauthenticatedRouteAndMethod($route,$method);
-    
+
     /**
      * Check for results when authenticated.
      *
      * @depends assertUserModelHasApiTokenProperty
-     * @param  User $user
-     * @param  Illuminate\Routing\Route $route
+     * @param User $user
+     * @param Illuminate\Routing\Route $route
      */
     public function getsJsonForAuthenticatedRoute($user, $route);
-    
 
     /**
      * Check for results for a given route and method with authentication.
      *
      * @depends assertUserModelHasApiTokenProperty
-     * @param  User $user
-     * @param  Illuminate\Routing\Route $route
-     * @param  string $method
+     * @param User $user
+     * @param Illuminate\Routing\Route $route
+     * @param string $method
      */
-    public function getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method );
+    public function getsJsonForAuthenticatedRouteAndMethod($user, $route, $method);
 
-    
     /**
      * Make api call with authentication.
      *
      * @depends assertUserModelHasApiTokenProperty
-     * @param  User $user
-     * @param  Illuminate\Routing\Route $route
-     * @param  string $method
+     * @param User $user
+     * @param Illuminate\Routing\Route $route
+     * @param string $method
      */
-    public function makeApiCallWithAuthentication( $user, $route, $method );
+    public function makeApiCallWithAuthentication($user, $route, $method);
 }

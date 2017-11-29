@@ -2,15 +2,10 @@
 
 namespace Blasher\Laratest\Tests\API;
 
-use App\Factory;
 use App\User;
 use Blasher\Laratest\ApiAuthenticatable;
 use Blasher\Laratest\ApiAuthTestInterface as ApiAuthTestInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Response as Response;
-use Exception;
-use Route;
-use Schema;
 use Tests\TestCase;
 
 class ApiPassportAuthTest extends TestCase implements ApiAuthTestInterface
@@ -19,16 +14,17 @@ class ApiPassportAuthTest extends TestCase implements ApiAuthTestInterface
     use RefreshDatabase;
 
     // PROPERTIES
-    
-     /**
+
+    /**
      * Make api call with authentication.
      *
      * @depends assertUserModelHasApiTokenProperty
+     *
      * @param  User $user
      * @param  Illuminate\Routing\Route $route
      * @param  string $method
      */
-    public function makeApiCallWithAuthentication( $user, $route, $method )
+    public function makeApiCallWithAuthentication($user, $route, $method)
     {
         echo $user->name.' - '.$route->uri().' - '.$method."\n";
         $route_uri = $route->uri().'?api_token='.$user->api_token;
@@ -36,11 +32,5 @@ class ApiPassportAuthTest extends TestCase implements ApiAuthTestInterface
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json('POST', '/user', ['name' => 'Sally']);
-
-        
     }
-
-
-        
-
 }

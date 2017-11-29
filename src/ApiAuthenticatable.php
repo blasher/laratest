@@ -6,10 +6,8 @@ use App\Factory;
 use App\User;
 use DB;
 use Exception;
-use Faker\Generator as Faker;
 use Illuminate\Http\Request as Request;
 use Illuminate\Http\Response as Response;
-use Tests\TestCase;
 use Route;
 use Schema;
 
@@ -21,6 +19,7 @@ trait ApiAuthenticatable
      * A basic test example.
      *
      * @test
+     *
      * @return void
      */
     public function testExample()
@@ -34,7 +33,9 @@ trait ApiAuthenticatable
      *
      * @test
      * @depends testExample
+     *
      * @todo pretty sure this test will always pass
+     *
      * @return void
      */
     public function assertDBConnectionExists()
@@ -43,11 +44,10 @@ trait ApiAuthenticatable
         
         try {
             $pdo = DB::connection()->getPdo();
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
         }
         
-        $this->assertTrue( is_object($pdo) );
+        $this->assertTrue(is_object($pdo));
     }
 
 
@@ -57,11 +57,12 @@ trait ApiAuthenticatable
      * @test
      * @depends testExample
      * @depends assertDBConnectionExists
+     *
      * @return void
      */
     public function assertUserTableExists()
     {
-        $this->assertTrue( Schema::hasTable('users') );
+        $this->assertTrue(Schema::hasTable('users'));
     }
 
     
@@ -70,6 +71,7 @@ trait ApiAuthenticatable
      *
      * @test
      * @depends testExample
+     *
      * @return void
      */
     public function assertApiHasRoutes()
@@ -85,6 +87,7 @@ trait ApiAuthenticatable
      *
      * @test
      * @depends testExample
+     *
      * @return void
      */
     public function assertUserFactoryExists()
@@ -93,13 +96,12 @@ trait ApiAuthenticatable
 
         try {
             $user = factory(User::class)->create();
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $msg  = 'User factory does not exist.';
-            echo ( $msg . "\n" );
+            echo ($msg . "\n");
         }
 
-        $this->assertTrue( is_object($user) );
+        $this->assertTrue(is_object($user));
     }
 
 
@@ -109,6 +111,7 @@ trait ApiAuthenticatable
      * @test
      * @depends assertUserTableExists
      * @depends assertUserFactoryExists
+     *
      * @return void
      */
     public function assertApiUserCanBeCreated()
@@ -117,13 +120,12 @@ trait ApiAuthenticatable
         
         try {
             $user = $this->createApiUser();
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $msg  = 'User could not be created with factory.';
-            echo ( $msg . "\n" );
+            echo ($msg . "\n");
         }
 
-        $this->assertTrue( is_object($user) );
+        $this->assertTrue(is_object($user));
     }
 
 
@@ -133,6 +135,7 @@ trait ApiAuthenticatable
      * @test
      * @depends assertApiUserCanBeCreated
      * @depends assertApiHasRoutes
+     *
      * @return void
      */
     public function assertApiRoutesAreProtectedWhenUnauthorized()
@@ -140,8 +143,8 @@ trait ApiAuthenticatable
         $assertion = true;
         $routes = $this->getApiRoutes();
 
-        foreach ($routes as $route)  {
-            if(!$this->assertApiRouteIsProtectedWhenUnauthorized( $route ))
+        foreach ($routes as $route) {
+            if(!$this->assertApiRouteIsProtectedWhenUnauthorized($route))
             {  $assertion = false;
                break;
             }
@@ -157,6 +160,7 @@ trait ApiAuthenticatable
      * @test
      * @depends assertApiUserCanBeCreated
      * @depends assertApiHasRoutes
+     *
      * @return void
      */
     public function assertApiRoutesAreAccessibleWhenAuthorized()
@@ -165,8 +169,8 @@ trait ApiAuthenticatable
         $user = $this->createApiUser();
         $routes = $this->getApiRoutes();
 
-        foreach ($routes as $route)  {
-            if(!$this->assertApiRouteIsAccessibleWhenAuthorized( $user, $route ) )
+        foreach ($routes as $route) {
+            if(!$this->assertApiRouteIsAccessibleWhenAuthorized($user, $route))
             {  $assertion = false;
                break;
             }
@@ -174,8 +178,7 @@ trait ApiAuthenticatable
 
         $this->assertTrue($assertion);
     }
-    
-    
+
     // HELPERS
 
     /**
@@ -196,7 +199,7 @@ trait ApiAuthenticatable
             // 'connect',
         ];
     }
-    
+
     /**
      * validResponseForunauthenticated.
      *
@@ -211,7 +214,6 @@ trait ApiAuthenticatable
         ];
     }
 
-
     /**
      * Create api user.
      *
@@ -221,7 +223,7 @@ trait ApiAuthenticatable
     {
         return factory(User::class)->create();
     }
-    
+
     /**
      * getApiRoutes.
      *
@@ -245,30 +247,31 @@ trait ApiAuthenticatable
         return $apiRoutes;
     }
 
-    
     /**
      * filterApiRoutes.
      *
-     * @param  Illuminate\Routing\RouteCollection $routes
+     * @param Illuminate\Routing\RouteCollection $routes
+     *
      * @return Illuminate\Routing\RouteCollection
      */
     public function filterApiRoutes($routes)
     {
         $apiRoutes = [];
 
-        foreach($routes as $route){
-            if( $this->isApiRoute($route->uri())) {
+        foreach($routes as $route) {
+            if($this->isApiRoute($route->uri())) {
                 $apiRoutes[] = $route;
             }
         }
 
         return $apiRoutes;
     }
-    
+
     /**
      * isApiRoute.
      *
-     * @param  string $uri
+     * @param string $uri
+     *
      * @return bool
      */
     public function isApiRoute($uri)
@@ -276,59 +279,58 @@ trait ApiAuthenticatable
         return (bool) preg_match('/^api/', $uri);
     }
 
-
     /**
      * cacheApiRoutes.
      *
-     * @param  Illuminate\Routing\RouteCollection $routes
+     * @param Illuminate\Routing\RouteCollection $routes
+     *
      * @return bool
      */
     public function cacheApiRoutes($routes)
     {  $this->apiRoutes = $routes;
     }
 
-    
     /**
      * Determine whether a single api route is protected when unahthorized.
      *
-     * @param  Illuminate\Routing\Route $route
+     * @param Illuminate\Routing\Route $route
+     *
      * @return bool
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
-    public function assertApiRouteIsProtectedWhenUnauthorized( $route )
+    public function assertApiRouteIsProtectedWhenUnauthorized($route)
     {
         return $this->getsErrorForUnauthenticatedRoute($route);
     }
 
-    
     /**
      * Determine whether a single api route is accesible when authorized.
      *
-     * @param  User $user
-     * @param  Illuminate\Routing\Route $route
+     * @param User $user
+     * @param Illuminate\Routing\Route $route
+     *
      * @return bool
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
-    public function assertApiRouteIsAccessibleWhenAuthorized( $user, $route )
+    public function assertApiRouteIsAccessibleWhenAuthorized($user, $route)
     {
         return $this->getsJsonForAuthenticatedRoute($user, $route);
     }
 
-    
     /**
      * Check for unauthenticated error or redirect when not authenticated
      * for all http request methods given a route.
      *
-     * @param  Illuminate\Routing\Route $route
+     * @param Illuminate\Routing\Route $route
      */
-    public function getsErrorForUnauthenticatedRoute( $route )
+    public function getsErrorForUnauthenticatedRoute($route)
     {
         $assertion = true;
         
-        foreach ($this->httpRequestMethods() as $method)
-        {   if( !( $this->getsErrorForUnauthenticatedRouteAndMethod( $route, $method )) )
+        foreach ($this->httpRequestMethods() as $method) {
+            if(!( $this->getsErrorForUnauthenticatedRouteAndMethod( $route, $method )))
             {  $assertion = false;
             }
         }
@@ -340,10 +342,10 @@ trait ApiAuthenticatable
      * Check for unauthenticated error or redirect when not authenticated
      * given a route and http reuest method.
      *
-     * @param  Illuminate\Routing\Route $route
-     * @param  string $method
+     * @param Illuminate\Routing\Route $route
+     * @param string $method
      */
-    public function getsErrorForUnauthenticatedRouteAndMethod( $route, $method )
+    public function getsErrorForUnauthenticatedRouteAndMethod($route, $method)
     {
         $response = $this->$method($route->uri());
         $assertion = true;
@@ -352,33 +354,32 @@ trait ApiAuthenticatable
         $status = $response->getStatusCode();
 
         try {
-            $this->assertContains( $status , $validUnauthedResponses);
+            $this->assertContains($status, $validUnauthedResponses);
         } catch (Exception $e) {
             $assertion = false;
             
             $msg  = 'Unprotected API route ' . $route->uri . '.  Returned  ' . $status . '.  ';
             $msg .= 'When unathenticated api should return ' . implode(' or ', $validUnauthedResponses);
-            echo ( $msg . "\n" );
+            echo ($msg . "\n");
         }
 
         return $assertion;
     }
 
-
     /**
      * Check for results when authenticated.
      *
      * @depends assertUserModelHasApiTokenProperty
-     * @param  User $user
-     * @param  Illuminate\Routing\Route $route
+     *
+     * @param User $user
+     * @param Illuminate\Routing\Route $route
      */
-    public function getsJsonForAuthenticatedRoute( $user, $route )
+    public function getsJsonForAuthenticatedRoute($user, $route)
     {
         $assertion = true;
 
-        foreach ($route->methods as $method)
-        {
-            if( !( $this->getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method )) )
+        foreach ($route->methods as $method) {
+            if(!( $this->getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method )))
             {  $assertion = false;
             }
         }
@@ -386,29 +387,28 @@ trait ApiAuthenticatable
         return $assertion;
     }
 
-
     /**
      * Check for results for a given route and method with authentication.
      *
      * @depends assertUserModelHasApiTokenProperty
-     * @param  User $user
-     * @param  Illuminate\Routing\Route $route
-     * @param  string $method
+     *
+     * @param User $user
+     * @param Illuminate\Routing\Route $route
+     * @param string $method
      */
-    public function getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method )
+    public function getsJsonForAuthenticatedRouteAndMethod($user, $route, $method)
     {
         $assertion = true;
         $response = $this->makeApiCallWithAuthentication($user, $route, $method);
         
         try {
-            $response->assertStatus( Response::HTTP_OK );
-        } catch( Exception $e)
-        {   echo "\n". 'Failed authentication for '.$method.' @ ' .$route->uri()."\n";
+            $response->assertStatus(Response::HTTP_OK);
+        } catch(Exception $e) {
+            echo "\n". 'Failed authentication for '.$method.' @ ' .$route->uri()."\n";
             echo 'User api token: '.$user->api_token;
             $assertion = false;
         }
 
         return $assertion;
     }
-    
 }
