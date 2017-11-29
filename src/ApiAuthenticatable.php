@@ -324,7 +324,7 @@ trait ApiAuthenticatable
         $assertion = true;
 
         foreach ($this->httpRequestMethods() as $method) {
-            if (!($this->getsErrorForUnauthenticatedRouteAndMethod( $route, $method ))) {
+            if (!($this->getsErrorForUnauthenticatedRouteAndMethod($route, $method))) {
                 $assertion = false;
             }
         }
@@ -352,7 +352,7 @@ trait ApiAuthenticatable
         } catch (Exception $e) {
             $assertion = false;
 
-            $msg  = 'Unprotected API route '.$route->uri.'.  Returned  '.$status.'.  ';
+            $msg = 'Unprotected API route '.$route->uri.'.  Returned  '.$status.'.  ';
             $msg .= 'When unathenticated api should return '.implode(' or ', $validUnauthedResponses);
             echo $msg."\n";
         }
@@ -373,7 +373,7 @@ trait ApiAuthenticatable
         $assertion = true;
 
         foreach ($route->methods as $method) {
-            if (!($this->getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method ))) {
+            if (!($this->getsJsonForAuthenticatedRouteAndMethod($user, $route, $method))) {
                 $assertion = false;
             }
         }

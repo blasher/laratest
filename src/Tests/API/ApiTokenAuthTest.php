@@ -32,7 +32,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
 
         $this->assertTrue(Schema::hasColumn('users', 'api_token'));
     }
-   
+
     /**
      * Assert User model has api_token property.
      *
@@ -67,14 +67,14 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
         return $api_token;
     }
 
-
     /**
      * Make api call with authentication.
      *
-     * @param   User                     $user
-     * @param   Illuminate\Routing\Route $route
-     * @param   string                   $method
-     * @todo    more graceful approach to testing HEAD method
+     * @param  User                     $user
+     * @param  Illuminate\Routing\Route $route
+     * @param  string                   $method
+     *
+     * @todo   more graceful approach to testing HEAD method
      */
     public function makeApiCallWithAuthentication($user, $route, $method)
     {
@@ -92,7 +92,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
 
         $response = $this->actingAs($user)
                          ->$method($route_uri);
-        
+
         return $response;
     }
 }
