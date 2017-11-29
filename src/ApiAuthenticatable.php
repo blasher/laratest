@@ -293,7 +293,7 @@ trait ApiAuthenticatable
      *
      * @todo add tests for regular expressioned routes i.e. /api/user/{user}
      */
-    public function assetApiRouteIsProtectedWhenUnauthorized($route)
+    public function assertApiRouteIsProtectedWhenUnauthorized($route)
     {
         return $this->getsErrorForUnauthenticatedRoute($route);
     }
