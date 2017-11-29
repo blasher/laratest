@@ -32,7 +32,6 @@ interface ApiAuthTestInterface
      *
      * @test
      * @depends testExample
-     *
      * @depends assertDBConnectionExists
      *
      * @return void
@@ -186,6 +185,7 @@ interface ApiAuthTestInterface
      * Check for results when authenticated.
      *
      * @depends assertUserModelHasApiTokenProperty
+     *
      * @param User                     $user
      * @param Illuminate\Routing\Route $route
      */

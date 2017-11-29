@@ -112,7 +112,7 @@ trait ApiAuthenticatable
     public function assertApiUserCanBeCreated()
     {
         $user = '';
-        
+
         try {
             $user = $this->createApiUser();
         } catch (Exception $e) {
@@ -139,14 +139,13 @@ trait ApiAuthenticatable
 
         foreach ($routes as $route) {
             if (!$this->assertApiRouteIsProtectedWhenUnauthorized($route)) {
-               $assertion = false;
-               break;
+                $assertion = false;
+                break;
             }
-        }                
+        }
 
         $this->assertTrue($assertion);
     }
-
 
     /**
      * Test to determine whether all api routes are auth accessible when authorized.
@@ -233,7 +232,7 @@ trait ApiAuthenticatable
         }
 
         if (empty($apiRoutes)) {
-            throw new Exception ('No API routes found');
+            throw new Exception('No API routes found');
         }
 
         $this->cacheApiRoutes($apiRoutes);
@@ -281,7 +280,8 @@ trait ApiAuthenticatable
      * @return bool
      */
     public function cacheApiRoutes($routes)
-    {  $this->apiRoutes = $routes;
+    {
+        $this->apiRoutes = $routes;
     }
 
     /**
@@ -324,7 +324,7 @@ trait ApiAuthenticatable
         $assertion = true;
 
         foreach ($this->httpRequestMethods() as $method) {
-            if (!( $this->getsErrorForUnauthenticatedRouteAndMethod( $route, $method ))) {
+            if (!($this->getsErrorForUnauthenticatedRouteAndMethod( $route, $method ))) {
                 $assertion = false;
             }
         }
@@ -352,8 +352,8 @@ trait ApiAuthenticatable
         } catch (Exception $e) {
             $assertion = false;
 
-            $msg  = 'Unprotected API route ' . $route->uri . '.  Returned  ' . $status . '.  ';
-            $msg .= 'When unathenticated api should return ' . implode(' or ', $validUnauthedResponses);
+            $msg  = 'Unprotected API route '.$route->uri.'.  Returned  '.$status.'.  ';
+            $msg .= 'When unathenticated api should return '.implode(' or ', $validUnauthedResponses);
             echo $msg."\n";
         }
 
@@ -373,8 +373,8 @@ trait ApiAuthenticatable
         $assertion = true;
 
         foreach ($route->methods as $method) {
-            if (!( $this->getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method )))
-            {  $assertion = false;
+            if (!($this->getsJsonForAuthenticatedRouteAndMethod( $user, $route, $method ))) {
+                $assertion = false;
             }
         }
 
@@ -397,7 +397,7 @@ trait ApiAuthenticatable
 
         try {
             $response->assertStatus(Response::HTTP_OK);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo "\n".'Failed authentication for '.$method.' @ '.$route->uri()."\n";
             echo 'User api token: '.$user->api_token;
             $assertion = false;

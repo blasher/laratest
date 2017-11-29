@@ -20,9 +20,9 @@ class ApiPassportAuthTest extends TestCase implements ApiAuthTestInterface
      *
      * @depends assertUserModelHasApiTokenProperty
      *
-     * @param  User                     $user
-     * @param  Illuminate\Routing\Route $route
-     * @param  string                   $method
+     * @param User                     $user
+     * @param Illuminate\Routing\Route $route
+     * @param string                   $method
      */
     public function makeApiCallWithAuthentication($user, $route, $method)
     {

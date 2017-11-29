@@ -32,7 +32,6 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
 
         $this->assertTrue(Schema::hasColumn('users', 'api_token'));
     }
-
    
     /**
      * Assert User model has api_token property.
@@ -59,7 +58,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
     {
         $api_token = $user->api_token;
 
-        if(!($user->api_token)) {
+        if (!($user->api_token)) {
             $api_token = str_random(60);
             $user->api_token = $api_token;
             $user->save();
@@ -94,6 +93,6 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
         $response = $this->actingAs($user)
                          ->$method($route_uri);
         
-        return($response);
+        return $response;
     }
 }
