@@ -156,7 +156,7 @@ interface ApiAuthTestInterface
     /**
      * Determine whether a single api route is accessible when authorized.
      *
-     * @param User $user
+     * @param User                     $user
      * @param Illuminate\Routing\Route $route
      *
      * @return bool
@@ -178,15 +178,15 @@ interface ApiAuthTestInterface
      * given a route and http reuest method.
      *
      * @param Illuminate\Routing\Route $route
-     * @param string $method
+     * @param string                   $method
      */
-    public function getsErrorForUnauthenticatedRouteAndMethod($route,$method);
+    public function getsErrorForUnauthenticatedRouteAndMethod($route, $method);
 
     /**
      * Check for results when authenticated.
      *
      * @depends assertUserModelHasApiTokenProperty
-     * @param User $user
+     * @param User                     $user
      * @param Illuminate\Routing\Route $route
      */
     public function getsJsonForAuthenticatedRoute($user, $route);
