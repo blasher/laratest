@@ -2,13 +2,10 @@
 
 namespace Blasher\Laratest\Tests\API;
 
-use App\Factory;
 use App\User;
 use Blasher\Laratest\ApiAuthenticatable;
 use Blasher\Laratest\ApiAuthTestInterface as ApiAuthTestInterface;
-use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Response as Response;
 use Request;
 use Route;
 use Schema;
@@ -20,7 +17,7 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
     use RefreshDatabase;
 
     // PROPERTIES
-    
+
     protected $apiUser;
     protected $apiRoutes;
 
@@ -31,9 +28,9 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
      */
     public function assertUserTableHasApiTokenProperty()
     {
-        $user = new User;
+        $user = new User();
 
-        $this->assertTrue(Schema::hasColumn('users', 'api_token') );
+        $this->assertTrue(Schema::hasColumn('users', 'api_token'));
     }
 
    
@@ -45,27 +42,24 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
      */
     public function assertUserModelHasApiTokenProperty()
     {
-        $user = new User;
+        $user = new User();
 
         $fillable = $user->getFillable();
         $guarded = $user->getGuarded();
 
         $parms = $fillable + $guarded;
-        
+
         $this->assertContains('api_token', $parms);
     }
 
-
     /**
      * Ensure User has api_token.
-     *
      */
     public function ensureUserHasApiToken($user)
     {
         $api_token = $user->api_token;
 
-        if(!($user->api_token))
-        {
+        if(!($user->api_token)) {
             $api_token = str_random(60);
             $user->api_token = $api_token;
             $user->save();
@@ -78,12 +72,12 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
     /**
      * Make api call with authentication.
      *
-     * @param   User $user
+     * @param   User                     $user
      * @param   Illuminate\Routing\Route $route
-     * @param   string $method
+     * @param   string                   $method
      * @todo    more graceful approach to testing HEAD method
      */
-    public function makeApiCallWithAuthentication( $user, $route, $method )
+    public function makeApiCallWithAuthentication($user, $route, $method)
     {
         $api_token = $this->ensureUserHasApiToken($user);
 
@@ -92,13 +86,13 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
         //        $request = Request::create('/'.$route->uri(), strtoupper($method));
         //        $expected_response = Route::dispatch($request);
         //        dd($expected_response);
-        
+
         $route_uri = $route->uri().'?api_token='.$api_token;
 
         //        echo "\n".'TESTING '.$user->name.' - '.$method.' - '.$route_uri."\n";
-        
+
         $response = $this->actingAs($user)
-                         ->$method( $route_uri );
+                         ->$method($route_uri);
         
         return($response);
     }

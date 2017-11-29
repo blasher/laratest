@@ -91,7 +91,7 @@ interface ApiAuthTestInterface
      * @return void
      */
     public function assertApiRoutesAreAccessibleWhenAuthorized();
-    
+
     // HELPERS
 
     /**
@@ -100,7 +100,7 @@ interface ApiAuthTestInterface
      * @return array
      */
     public function httpRequestMethods();
-    
+
     /**
      * validResponseForunauthenticated.
      *
@@ -195,9 +195,10 @@ interface ApiAuthTestInterface
      * Check for results for a given route and method with authentication.
      *
      * @depends assertUserModelHasApiTokenProperty
-     * @param User $user
+     *
+     * @param User                     $user
      * @param Illuminate\Routing\Route $route
-     * @param string $method
+     * @param string                   $method
      */
     public function getsJsonForAuthenticatedRouteAndMethod($user, $route, $method);
 
@@ -205,9 +206,10 @@ interface ApiAuthTestInterface
      * Make api call with authentication.
      *
      * @depends assertUserModelHasApiTokenProperty
-     * @param User $user
+     *
+     * @param User                     $user
      * @param Illuminate\Routing\Route $route
-     * @param string $method
+     * @param string                   $method
      */
     public function makeApiCallWithAuthentication($user, $route, $method);
 }
