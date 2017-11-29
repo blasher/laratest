@@ -70,9 +70,9 @@ class ApiTokenAuthTest extends TestCase implements ApiAuthTestInterface
     /**
      * Make api call with authentication.
      *
-     * @param  User                     $user
-     * @param  Illuminate\Routing\Route $route
-     * @param  string                   $method
+     * @param User                     $user
+     * @param Illuminate\Routing\Route $route
+     * @param string                   $method
      *
      * @todo   more graceful approach to testing HEAD method
      */
